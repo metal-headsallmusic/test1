@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Betting Web App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #0f4c81;
+            padding: 0.5rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            padding: 1rem;
+        }
+        .live-updates {
+            background-color: #ffef82;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .betting-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .bet-card {
+            background-color: white;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .bet-card h3 {
+            margin: 0;
+        }
+        .dropdown {
+            margin-top: 10px;
+        }
+        .dropdown select {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+    <script>
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            if (dropdown.style.display === "none" || dropdown.style.display === "") {
+                dropdown.style.display = "block";
+            } else {
+                dropdown.style.display = "none";
+            }
+        }
+
+        function calculateProfit(teamOddsId, betAmountId, resultId) {
+            const odds = parseFloat(document.getElementById(teamOddsId).value);
+            const betAmount = parseFloat(document.getElementById(betAmountId).value);
+
+            if (!isNaN(odds) && !isNaN(betAmount)) {
+                const profit = (betAmount * odds - betAmount).toFixed(2);
+                document.getElementById(resultId).innerText = `Profit: ${profit} units`;
+            } else {
+                document.getElementById(resultId).innerText = "Please select valid options.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>BetPro: Cricket Betting</h1>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#live-updates">Live Updates</a>
+        <a href="#bets">Place Bets</a>
+        <a href="#account">Account</a>
+    </nav>
+    <div class="container">
+        <section id="live-updates" class="live-updates">
+            <h2>Live Updates</h2>
+            <p>Live Score: India 220/3 (38 overs) vs Australia</p>
+            <p>Odds: India (1.5), Australia (2.8)</p>
+        </section>
+        <section id="bets" class="betting-section">
+            <div class="bet-card">
+                <h3>India vs Australia</h3>
+                <p>Odds: India (1.5), Australia (2.8)</p>
+                <button onclick="toggleDropdown('dropdown-india-australia')">Place Bet</button>
+                <div class="dropdown" id="dropdown-india-australia" style="display: none;">
+                    <label for="teamIndiaAustralia">Select Team:</label>
+                    <select id="teamIndiaAustralia">
+                        <option value="">--Choose Team--</option>
+                        <option value="1.5">India</option>
+                        <option value="2.8">Australia</option>
+                    </select>
+
+                    <label for="betAmountIndiaAustralia">Select Bet Amount:</label>
+                    <select id="betAmountIndiaAustralia">
+                        <option value="">--Choose Amount--</option>
+                        <option value="100">100 units</option>
+                        <option value="200">200 units</option>
+                        <option value="500">500 units</option>
+                    </select>
+
+                    <button onclick="calculateProfit('teamIndiaAustralia', 'betAmountIndiaAustralia', 'profitIndiaAustralia')">Calculate Profit</button>
+                    <p id="profitIndiaAustralia">Profit: 0 units</p>
+                </div>
+            </div>
+
+            <div class="bet-card">
+                <h3>England vs Pakistan</h3>
+                <p>Odds: England (2.0), Pakistan (1.8)</p>
+                <button onclick="toggleDropdown('dropdown-england-pakistan')">Place Bet</button>
+                <div class="dropdown" id="dropdown-england-pakistan" style="display: none;">
+                    <label for="teamEnglandPakistan">Select Team:</label>
+                    <select id="teamEnglandPakistan">
+                        <option value="">--Choose Team--</option>
+                        <option value="2.0">England</option>
+                        <option value="1.8">Pakistan</option>
+                    </select>
+
+                    <label for="betAmountEnglandPakistan">Select Bet Amount:</label>
+                    <select id="betAmountEnglandPakistan">
+                        <option value="">--Choose Amount--</option>
+                        <option value="100">100 units</option>
+                        <option value="200">200 units</option>
+                        <option value="500">500 units</option>
+                    </select>
+
+                    <button onclick="calculateProfit('teamEnglandPakistan', 'betAmountEnglandPakistan', 'profitEnglandPakistan')">Calculate Profit</button>
+                    <p id="profitEnglandPakistan">Profit: 0 units</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 BetPro. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
